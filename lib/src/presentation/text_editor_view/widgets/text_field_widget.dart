@@ -54,6 +54,15 @@ class TextFieldWidget extends StatelessWidget {
     required ControlNotifier controlNotifier,
     required PaintingStyle paintingStyle,
   }) {
+    Color? color;
+
+    try {
+      if (controlNotifier.colorList.isNotEmpty) 
+        color = controlNotifier.colorList?.elementAt(editorNotifier.textColor)
+    } catch (e) {
+      print(e);
+    }
+
     return Text(
       editorNotifier.textController.text,
       textAlign: editorNotifier.textAlign,
@@ -62,13 +71,12 @@ class TextFieldWidget extends StatelessWidget {
           package: controlNotifier.isCustomFontList ? null : 'stories_editor',
           shadows: <Shadow>[
             Shadow(
-                offset: const Offset(1.0, 1.0),
-                blurRadius: 3.0,
-                color: editorNotifier.textColor == Colors.black
-                    ? Colors.white54
-                    : Colors.black)
+              offset: const Offset(1.0, 1.0),
+              blurRadius: 3.0,
+              color: editorNotifier.textColor == Colors.black ? Colors.white54 : Colors.black,
+            )
           ]).copyWith(
-          color: controlNotifier.colorList![editorNotifier.textColor],
+          color: color,
           fontSize: editorNotifier.textSize,
           background: Paint()
             ..strokeWidth = 20.0
