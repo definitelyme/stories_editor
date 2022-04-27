@@ -147,6 +147,14 @@ class _TopToolsState extends State<TopTools> {
 
   /// gradient color selector
   Widget _selectColor({onTap, controlProvider}) {
+    List<Color> colors = const [];
+
+    try {
+      if (controlProvider.gradientColors != null && controlProvider.gradientColors.isNotEmpty) {
+        colors = controlProvider.gradientColors![controlProvider.gradientIndex];
+      }
+    } catch (_) {}
+
     return Padding(
       padding: const EdgeInsets.only(left: 5, right: 5, top: 8),
       child: AnimatedOnTapButton(
@@ -161,11 +169,7 @@ class _TopToolsState extends State<TopTools> {
             width: 30,
             height: 30,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: controlProvider.gradientColors?.elementAtOrNull(controlProvider.gradientIndex),
-              ),
+              gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: colors),
               shape: BoxShape.circle,
             ),
           ),
