@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/control_provider.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/text_editing_notifier.dart';
 import 'package:stories_editor/src/presentation/widgets/animated_onTap_button.dart';
+import 'package:stories_editor/src/presentation/utils/Extensions/list_extension.dart';
 
 class FontSelector extends StatelessWidget {
   const FontSelector({Key? key}) : super(key: key);
@@ -39,24 +40,17 @@ class FontSelector extends StatelessWidget {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                      color: index == editorNotifier.fontFamilyIndex
-                          ? Colors.white
-                          : Colors.black.withOpacity(0.4),
+                      color: index == editorNotifier.fontFamilyIndex ? Colors.white : Colors.black.withOpacity(0.4),
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white)),
                   child: Center(
                     child: Text(
                       'Aa',
                       style: TextStyle(
-                              fontFamily: controlNotifier.fontList![index],
-                              package: controlNotifier.isCustomFontList
-                                  ? null
-                                  : 'stories_editor')
+                              fontFamily: controlNotifier.fontList?.elementAtOrNull(index),
+                              package: controlNotifier.isCustomFontList ? null : 'stories_editor')
                           .copyWith(
-                              color: index == editorNotifier.fontFamilyIndex
-                                  ? Colors.red
-                                  : Colors.white,
-                              fontWeight: FontWeight.bold),
+                              color: index == editorNotifier.fontFamilyIndex ? Colors.red : Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),

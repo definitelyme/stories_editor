@@ -10,6 +10,7 @@ import 'package:stories_editor/src/presentation/utils/constants/text_animation_t
 import 'package:stories_editor/src/presentation/utils/modal_sheets.dart';
 import 'package:stories_editor/src/presentation/widgets/animated_onTap_button.dart';
 import 'package:stories_editor/src/presentation/widgets/tool_button.dart';
+import 'package:stories_editor/src/presentation/utils/Extensions/list_extension.dart';
 
 class TopTools extends StatefulWidget {
   final GlobalKey contentKey;
@@ -161,7 +162,10 @@ class _TopToolsState extends State<TopTools> {
             height: 30,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                  begin: Alignment.topLeft, end: Alignment.bottomRight, colors: controlProvider.gradientColors![controlProvider.gradientIndex]),
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: controlProvider.gradientColors?.elementAtOrNull(controlProvider.gradientIndex),
+              ),
               shape: BoxShape.circle,
             ),
           ),

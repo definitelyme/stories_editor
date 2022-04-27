@@ -34,6 +34,7 @@ import 'package:stories_editor/src/presentation/utils/constants/render_state.dar
 import 'package:stories_editor/src/presentation/utils/modal_sheets.dart';
 import 'package:stories_editor/src/presentation/widgets/animated_onTap_button.dart';
 import 'package:stories_editor/src/presentation/widgets/scrollable_pageView.dart';
+import 'package:stories_editor/src/presentation/utils/Extensions/list_extension.dart';
 
 class MainView extends StatefulWidget {
   /// editor custom font families
@@ -208,7 +209,9 @@ class _MainViewState extends State<MainView> {
                                               //borderRadius: BorderRadius.circular(25),
                                               gradient: controlNotifier.mediaPath.isEmpty
                                                   ? LinearGradient(
-                                                      colors: controlNotifier.gradientColors![controlNotifier.gradientIndex],
+                                                      colors:
+                                                          controlNotifier.gradientColors?.elementAtOrNull(controlNotifier.gradientIndex) ??
+                                                              [],
                                                       begin: Alignment.topLeft,
                                                       end: Alignment.bottomRight,
                                                     )

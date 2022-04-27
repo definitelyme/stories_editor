@@ -11,6 +11,7 @@ import 'package:stories_editor/src/presentation/painting_view/widgets/sketcher.d
 import 'package:stories_editor/src/presentation/painting_view/widgets/top_painting_tools.dart';
 import 'package:stories_editor/src/presentation/widgets/color_selector.dart';
 import 'package:stories_editor/src/presentation/widgets/size_slider_selector.dart';
+import 'package:stories_editor/src/presentation/utils/Extensions/list_extension.dart';
 
 class Painting extends StatefulWidget {
   const Painting({Key? key}) : super(key: key);
@@ -50,11 +51,12 @@ class _PaintingState extends State<Painting> {
       final point = Point(offset.dx, offset.dy);
       final points = [point];
 
+      Color color = controlProvider.colorList?.elementAtOrNull(paintingNotifier.lineColor) ?? Colors.transparent;
+
       /// validate allow pan area
       if (point.y >= 4 &&
           point.y <= (Platform.isIOS ? (screenSize.size.height - 132) - screenSize.viewPadding.top : screenSize.size.height - 132)) {
-        line = PaintingModel(points, paintingNotifier.lineWidth, 1, 1, false, controlProvider.colorList![paintingNotifier.lineColor], 1,
-            true, paintingNotifier.paintingType);
+        line = PaintingModel(points, paintingNotifier.lineWidth, 1, 1, false, color, 1, true, paintingNotifier.paintingType);
       }
     }
 
@@ -65,11 +67,12 @@ class _PaintingState extends State<Painting> {
       final point = Point(offset.dx, offset.dy);
       final points = [...line!.points, point];
 
+      Color color = controlNotifier.colorList?.elementAtOrNull(paintingNotifier.lineColor) ?? Colors.transparent;
+
       /// validate allow pan area
       if (point.y >= 6 &&
           point.y <= (Platform.isIOS ? (screenSize.size.height - 132) - screenSize.viewPadding.top : screenSize.size.height - 132)) {
-        line = PaintingModel(points, paintingNotifier.lineWidth, 1, 1, false, controlNotifier.colorList![paintingNotifier.lineColor], 1,
-            true, paintingNotifier.paintingType);
+        line = PaintingModel(points, paintingNotifier.lineWidth, 1, 1, false, color, 1, true, paintingNotifier.paintingType);
         paintingNotifier.currentLineStreamController.add(line!);
       }
     }

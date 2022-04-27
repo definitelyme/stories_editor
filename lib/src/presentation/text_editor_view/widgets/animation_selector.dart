@@ -6,6 +6,7 @@ import 'package:stories_editor/src/domain/providers/notifiers/control_provider.d
 import 'package:stories_editor/src/domain/providers/notifiers/text_editing_notifier.dart';
 import 'package:stories_editor/src/presentation/utils/constants/text_animation_type.dart';
 import 'package:stories_editor/src/presentation/widgets/animated_onTap_button.dart';
+import 'package:stories_editor/src/presentation/utils/Extensions/list_extension.dart';
 
 class AnimationSelector extends StatelessWidget {
   const AnimationSelector({Key? key}) : super(key: key);
@@ -41,57 +42,37 @@ class AnimationSelector extends StatelessWidget {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                      color: index == editorNotifier.fontAnimationIndex
-                          ? Colors.white
-                          : Colors.black.withOpacity(0.4),
+                      color: index == editorNotifier.fontAnimationIndex ? Colors.white : Colors.black.withOpacity(0.4),
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white)),
                   child: DefaultTextStyle(
                     style: TextStyle(
-                            fontFamily: controlNotifier
-                                .fontList![editorNotifier.fontFamilyIndex],
-                            package: controlNotifier.isCustomFontList
-                                ? null
-                                : 'stories_editor')
+                            fontFamily: controlNotifier.fontList?.elementAtOrNull(editorNotifier.fontFamilyIndex),
+                            package: controlNotifier.isCustomFontList ? null : 'stories_editor')
                         .copyWith(
-                            color: index == editorNotifier.fontAnimationIndex
-                                ? Colors.red
-                                : Colors.white,
-                            fontWeight: FontWeight.bold),
-                    child: editorNotifier.animationList[index] ==
-                            TextAnimationType.none
+                            color: index == editorNotifier.fontAnimationIndex ? Colors.red : Colors.white, fontWeight: FontWeight.bold),
+                    child: editorNotifier.animationList[index] == TextAnimationType.none
                         ? const Text('Aa')
                         : AnimatedTextKit(
                             repeatForever: true,
                             animatedTexts: [
-                              if (editorNotifier.animationList[index] ==
-                                  TextAnimationType.scale)
-                                ScaleAnimatedText('Aa',
-                                    duration:
-                                        const Duration(milliseconds: 600)),
-                              if (editorNotifier.animationList[index] ==
-                                  TextAnimationType.fade)
-                                FadeAnimatedText('Aa',
-                                    duration:
-                                        const Duration(milliseconds: 600)),
-                              if (editorNotifier.animationList[index] ==
-                                  TextAnimationType.typer)
-                                TyperAnimatedText('Aa',
-                                    speed: const Duration(milliseconds: 500)),
-                              if (editorNotifier.animationList[index] ==
-                                  TextAnimationType.typeWriter)
+                              if (editorNotifier.animationList[index] == TextAnimationType.scale)
+                                ScaleAnimatedText('Aa', duration: const Duration(milliseconds: 600)),
+                              if (editorNotifier.animationList[index] == TextAnimationType.fade)
+                                FadeAnimatedText('Aa', duration: const Duration(milliseconds: 600)),
+                              if (editorNotifier.animationList[index] == TextAnimationType.typer)
+                                TyperAnimatedText('Aa', speed: const Duration(milliseconds: 500)),
+                              if (editorNotifier.animationList[index] == TextAnimationType.typeWriter)
                                 TypewriterAnimatedText(
                                   'Aa',
                                   speed: const Duration(milliseconds: 500),
                                 ),
-                              if (editorNotifier.animationList[index] ==
-                                  TextAnimationType.wavy)
+                              if (editorNotifier.animationList[index] == TextAnimationType.wavy)
                                 WavyAnimatedText(
                                   'Aa',
                                   speed: const Duration(milliseconds: 500),
                                 ),
-                              if (editorNotifier.animationList[index] ==
-                                  TextAnimationType.flicker)
+                              if (editorNotifier.animationList[index] == TextAnimationType.flicker)
                                 FlickerAnimatedText(
                                   'Aa',
                                   speed: const Duration(milliseconds: 500),

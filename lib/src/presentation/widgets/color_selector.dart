@@ -4,6 +4,7 @@ import 'package:stories_editor/src/domain/providers/notifiers/control_provider.d
 import 'package:stories_editor/src/domain/providers/notifiers/painting_notifier.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/text_editing_notifier.dart';
 import 'package:stories_editor/src/presentation/widgets/animated_onTap_button.dart';
+import 'package:stories_editor/src/presentation/utils/Extensions/list_extension.dart';
 
 class ColorSelector extends StatelessWidget {
   const ColorSelector({Key? key}) : super(key: key);
@@ -12,8 +13,7 @@ class ColorSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
     return Consumer3<ControlNotifier, TextEditingNotifier, PaintingNotifier>(
-      builder:
-          (context, controlProvider, editorProvider, paintingProvider, child) {
+      builder: (context, controlProvider, editorProvider, paintingProvider, child) {
         return Container(
           height: _size.width * 0.1,
           width: _size.width,
@@ -29,20 +29,15 @@ class ColorSelector extends StatelessWidget {
                 margin: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
                     color: controlProvider.isPainting
-                        ? controlProvider.colorList![paintingProvider.lineColor]
-                        : controlProvider.colorList![editorProvider.textColor],
+                        ? controlProvider.colorList?.elementAtOrNull(paintingProvider.lineColor)
+                        : controlProvider.colorList?.elementAtOrNull(editorProvider.textColor),
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.white, width: 1.5)),
                 child: ImageIcon(
-                  const AssetImage('assets/icons/pickColor.png',
-                      package: 'stories_editor'),
+                  const AssetImage('assets/icons/pickColor.png', package: 'stories_editor'),
                   color: controlProvider.isPainting
-                      ? (paintingProvider.lineColor == 0
-                          ? Colors.black
-                          : Colors.white)
-                      : (editorProvider.textColor == 0
-                          ? Colors.black
-                          : Colors.white),
+                      ? (paintingProvider.lineColor == 0 ? Colors.black : Colors.white)
+                      : (editorProvider.textColor == 0 ? Colors.black : Colors.white),
                   size: 20,
                 ),
               ),
@@ -68,10 +63,9 @@ class ColorSelector extends StatelessWidget {
                         alignment: Alignment.center,
                         margin: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
-                            color: controlProvider.colorList![index],
+                            color: controlProvider.colorList?.elementAtOrNull(index),
                             shape: BoxShape.circle,
-                            border:
-                                Border.all(color: Colors.white, width: 1.5)),
+                            border: Border.all(color: Colors.white, width: 1.5)),
                       ),
                     );
                   },

@@ -11,6 +11,7 @@ import 'package:stories_editor/src/presentation/text_editor_view/widgets/font_se
 import 'package:stories_editor/src/presentation/text_editor_view/widgets/text_field_widget.dart';
 import 'package:stories_editor/src/presentation/text_editor_view/widgets/top_text_tools.dart';
 import 'package:stories_editor/src/presentation/utils/constants/item_type.dart';
+import 'package:stories_editor/src/presentation/utils/Extensions/list_extension.dart';
 import 'package:stories_editor/src/presentation/widgets/color_selector.dart';
 import 'package:stories_editor/src/presentation/widgets/size_slider_selector.dart';
 
@@ -134,12 +135,16 @@ class _TextEditorState extends State<TextEditor> {
         }
       }
 
+      final isDarkMode = MediaQuery.maybeOf(context)?.platformBrightness == Brightness.dark;
+
+      final textColor = isDarkMode ? Colors.white : Colors.black87;
+
       /// create Text Item
       _editableItemNotifier.draggableWidget.add(EditableItem()
         ..type = ItemType.text
         ..text = editorNotifier.text.trim()
         ..backGroundColor = editorNotifier.backGroundColor
-        ..textColor = controlNotifier.colorList![editorNotifier.textColor]
+        ..textColor = controlNotifier.colorList?.elementAtOrNull(editorNotifier.textColor) ?? textColor
         ..fontFamily = editorNotifier.fontFamilyIndex
         ..fontSize = editorNotifier.textSize
         ..fontAnimationIndex = editorNotifier.fontAnimationIndex
