@@ -57,7 +57,7 @@ class TextFieldWidget extends StatelessWidget {
     Color? color;
 
     try {
-      if (controlNotifier.colorList.isNotEmpty) 
+      if (controlNotifier.colorList != null && controlNotifier.colorList!.isNotEmpty)
         color = controlNotifier.colorList?.elementAt(editorNotifier.textColor)
     } catch (e) {
       print(e);
