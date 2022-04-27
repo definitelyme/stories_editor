@@ -55,18 +55,21 @@ class TextFieldWidget extends StatelessWidget {
     required PaintingStyle paintingStyle,
   }) {
     Color? color;
+    FontFamily? family;
 
     try {
       if (controlNotifier.colorList != null && controlNotifier.colorList!.isNotEmpty)
         color = controlNotifier.colorList?.elementAt(editorNotifier.textColor);
-    } catch (_) {
-    }
+
+      if (controlNotifier.fontList != null && controlNotifier.fontList!.isNotEmpty)
+        family = controlNotifier.fontList?.elementAt(editorNotifier.fontFamilyIndex);
+    } catch (_) {}
 
     return Text(
       editorNotifier.textController.text,
       textAlign: editorNotifier.textAlign,
       style: TextStyle(
-          fontFamily: controlNotifier.fontList![editorNotifier.fontFamilyIndex],
+          fontFamily: family,
           package: controlNotifier.isCustomFontList ? null : 'stories_editor',
           shadows: <Shadow>[
             Shadow(
@@ -94,6 +97,17 @@ class TextFieldWidget extends StatelessWidget {
     required ControlNotifier controlNotifier,
     required PaintingStyle paintingStyle,
   }) {
+    Color? color;
+    FontFamily? family;
+
+    try {
+      if (controlNotifier.colorList != null && controlNotifier.colorList!.isNotEmpty)
+        color = controlNotifier.colorList?.elementAt(editorNotifier.textColor);
+
+      if (controlNotifier.fontList != null && controlNotifier.fontList!.isNotEmpty)
+        family = controlNotifier.fontList?.elementAt(editorNotifier.fontFamilyIndex);
+    } catch (_) {}
+
     return TextField(
       focusNode: textNode,
       autofocus: true,
@@ -101,21 +115,17 @@ class TextFieldWidget extends StatelessWidget {
       controller: editorNotifier.textController,
       textAlign: editorNotifier.textAlign,
       style: TextStyle(
-              fontFamily:
-                  controlNotifier.fontList![editorNotifier.fontFamilyIndex],
-              package:
-                  controlNotifier.isCustomFontList ? null : 'stories_editor',
+              fontFamily: family,
+              package: controlNotifier.isCustomFontList ? null : 'stories_editor',
               shadows: <Shadow>[
                 Shadow(
                     offset: const Offset(1.0, 1.0),
                     blurRadius: 3.0,
-                    color: editorNotifier.textColor == Colors.black
-                        ? Colors.white54
-                        : Colors.black)
+                    color: editorNotifier.textColor == Colors.black ? Colors.white54 : Colors.black)
               ],
               backgroundColor: Colors.redAccent)
           .copyWith(
-        color: controlNotifier.colorList![editorNotifier.textColor],
+        color: color,
         fontSize: editorNotifier.textSize,
         background: Paint()
           ..strokeWidth = 20.0
@@ -129,12 +139,10 @@ class TextFieldWidget extends StatelessWidget {
           Shadow(
               offset: const Offset(1.0, 1.0),
               blurRadius: 3.0,
-              color: editorNotifier.textColor == Colors.black
-                  ? Colors.white54
-                  : Colors.black)
+              color: editorNotifier.textColor == Colors.black ? Colors.white54 : Colors.black)
         ],
       ),
-      cursorColor: controlNotifier.colorList![editorNotifier.textColor],
+      cursorColor: color,
       minLines: 1,
       keyboardType: TextInputType.multiline,
       maxLines: null,
