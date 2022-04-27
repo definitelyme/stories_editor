@@ -55,7 +55,7 @@ class TextFieldWidget extends StatelessWidget {
     required PaintingStyle paintingStyle,
   }) {
     Color? color;
-    FontFamily? family;
+    String? family;
 
     try {
       if (controlNotifier.colorList != null && controlNotifier.colorList!.isNotEmpty)
@@ -98,7 +98,7 @@ class TextFieldWidget extends StatelessWidget {
     required PaintingStyle paintingStyle,
   }) {
     Color? color;
-    FontFamily? family;
+    String? family;
 
     try {
       if (controlNotifier.colorList != null && controlNotifier.colorList!.isNotEmpty)
